@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eclipse_remote_control_command
+Bundle-SymbolicName: com.github.marook.eclipse_remote_control.command
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Markus Pielmeier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: com.github.marook.eclipse_remote_control.command.command,
+ com.github.marook.eclipse_remote_control.command.serialize,
+ com.github.marook.eclipse_remote_control.command.serialize.impl.serialize
