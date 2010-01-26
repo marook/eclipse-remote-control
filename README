@@ -1,0 +1,15 @@
+erc - eclipse remote control
+
+1) Introduction
+2) Eclipse Update Site
+
+---------------------------------------------------------------------
+Introduction
+
+Eclipse plug-in project which adds remote control features to eclipse.
+
+---------------------------------------------------------------------
+Eclipse Update Site
+
+The eclipse update site is available here:
+http://github.com/marook/eclipse-remote-control/raw/master/workspaces/erc/update_site/site.xml
