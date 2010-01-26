@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.github.marook.eclipse_remote_control_1.0.0.201001262104.jar" id="com.github.marook.eclipse_remote_control" version="1.0.0.201001262104"/>
+</site>
