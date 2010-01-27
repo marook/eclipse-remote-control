@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eclipse remote control client">
+	
+	<property name="erc.client.src" location="src" />
+	<property name="erc.client.res" location="res" />
+	<property name="erc.command.src" location="../com.github.marook.eclipse_remote_control.command/src" />
+	<property name="erc.build" location="target"/>
+	
+	<target name="clean">
+		<delete dir="${erc.build}"/>
+	</target>
+	
+	<target name="compile">
+		<mkdir dir="${erc.build}"/>
+		
+		<javac
+				destdir="${erc.build}"
+				debug="on">
+			<src path="${erc.client.src}" />
+			<src path="${erc.command.src}" />
+		</javac>
+		
+		<copy todir="${erc.build}">
+			<fileset dir="${erc.client.res}">
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="package" depends="compile">
+		<jar destfile="eclipse_remote_control_client.jar" basedir="${erc.build}">
+			<manifest>
+				<attribute name="Implementation-Title" value="eclipse remote control client"/>
+				<!-- TODO attribute name="Implementation-Version" value="1.0.0" -->
+				<attribute name="Main-Class" value="com.github.marook.eclipse_remote_control.client.Client" />
+			</manifest>
+		</jar>
+	</target>
+	
+</project>
