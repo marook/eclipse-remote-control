@@ -2,9 +2,9 @@
 <project name="eclipse remote control client">
 	
 	<property name="erc.client.src" location="src" />
-	<property name="erc.client.res" location="res" />
 	<property name="erc.command.src" location="../com.github.marook.eclipse_remote_control.command/src" />
 	<property name="erc.build" location="target"/>
+	<property name="erc.root" location="../../.." />
 	
 	<target name="clean">
 		<delete dir="${erc.build}"/>
@@ -21,7 +21,10 @@
 		</javac>
 		
 		<copy todir="${erc.build}">
-			<fileset dir="${erc.client.res}">
+			<fileset dir="${erc.root}">
+				<include name="AUTHORS"/>
+				<include name="COPYING"/>
+				<include name="README"/>
 			</fileset>
 		</copy>
 	</target>
