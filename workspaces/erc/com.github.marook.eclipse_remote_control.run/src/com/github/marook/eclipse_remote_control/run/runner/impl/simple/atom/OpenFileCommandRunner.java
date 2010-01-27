@@ -43,7 +43,7 @@ public class OpenFileCommandRunner extends AbstractAtomCommandRunner {
 	protected void internalExecute(final Command cmd) throws Exception {
 		final OpenFileCommand c = (OpenFileCommand) cmd;
 		
-		final File f = c.getFile();
+		final File f = new File(c.getFileName());
 		
 		if(!f.exists()){
 			// TODO abort / show message?

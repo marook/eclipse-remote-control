@@ -19,7 +19,6 @@
 
 package com.github.marook.eclipse_remote_control.client;
 
-import java.io.File;
 import java.io.ObjectOutput;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -45,6 +44,7 @@ public class Client {
 			cmdEncoder.writeObject(cmd);
 			
 			cmdEncoder.flush();
+			
 			cmdEncoder.close();
 		}
 		catch(final Exception e){
@@ -74,7 +74,7 @@ public class Client {
 			}
 			
 			final OpenFileCommand cmd = new OpenFileCommand();
-			cmd.setFile(new File(args[1]));
+			cmd.setFileName(args[1]);
 			
 			fireCommand(cmd);
 		}
