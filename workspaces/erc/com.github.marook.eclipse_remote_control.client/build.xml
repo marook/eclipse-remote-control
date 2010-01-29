@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with eclipse remote control.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<project name="eclipse remote control client">
+<project name="eclipse remote control client" default="package">
 	
 	<property name="erc.client.src" location="src" />
 	<property name="erc.command.src" location="../com.github.marook.eclipse_remote_control.command/src" />
