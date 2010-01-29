@@ -1,15 +1,69 @@
 erc - eclipse remote control
 
 1) Introduction
-2) Eclipse Update Site
+2) Distribution / Eclipse Update Site
+3) Build
+4) Usage
+5) Commands
+5.1) Open File
 
 ---------------------------------------------------------------------
 Introduction
 
 Eclipse plug-in project which adds remote control features to eclipse.
+Commands can be sent via the eclipse remote control client to a
+running eclipse instance.
 
 ---------------------------------------------------------------------
-Eclipse Update Site
+Distribution / Eclipse Update Site
+
+This project is licenses under the GPL license. See the file COPYING
+for details.
 
 The eclipse update site is available here:
 http://github.com/marook/eclipse-remote-control/raw/master/workspaces/erc/update_site/site.xml
+
+The eclipse remote control client can be downloaded here:
+http://github.com/marook/eclipse-remote-control/raw/master/workspaces/erc/release/eclipse_remote_control_client.jar
+
+---------------------------------------------------------------------
+Build
+
+To build the eclipse remote control client use the ant build.xml file
+in the client project. The following ant targets are available:
+
+* clean: Removes all temporary resources required for the ant build.
+* compile: Compiles the sources for the eclipse remote control client.
+* package: Creates a jar file with the client application.
+
+Use the default target package to build the client application.
+
+---------------------------------------------------------------------
+Usage
+
+Requirements are:
+* You have installed the eclipse remote control eclipse plugins.
+* You have downloaded the eclipse remote control client jar.
+
+Launch your eclipse with the eclipse remote control pluging installed.
+After eclipse has started you can send commands via the eclipse remote
+control client application. The syntax is:
+
+$ java -jar eclipse_remote_control.jar [command] [command args]
+
+---------------------------------------------------------------------
+Commands
+
+Currently the following commands are supported:
+
+
+---------------------------------------------------------------------
+Commands - Open File
+
+This command opens a file in the running eclipse instance.
+
+Syntax:
+$ java -jar eclipse_remote_control.jar open_file [absolute path to file]
+
+Example:
+$ java -jar eclipse_remote_control.jar open_file /tmp/file.txt
