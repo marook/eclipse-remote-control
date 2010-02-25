@@ -25,6 +25,7 @@ import java.util.Map;
 import com.github.marook.eclipse_remote_control.command.command.Command;
 import com.github.marook.eclipse_remote_control.run.runner.ICommandRunner;
 import com.github.marook.eclipse_remote_control.run.runner.impl.simple.atom.AbstractAtomCommandRunner;
+import com.github.marook.eclipse_remote_control.run.runner.impl.simple.atom.ExternalToolsCommandRunner;
 import com.github.marook.eclipse_remote_control.run.runner.impl.simple.atom.OpenFileCommandRunner;
 
 public class SimpleCommandRunner implements ICommandRunner {
@@ -38,6 +39,7 @@ public class SimpleCommandRunner implements ICommandRunner {
 	
 	static {
 		putAtomRunner(new OpenFileCommandRunner());
+		putAtomRunner(new ExternalToolsCommandRunner());
 	}
 
 	@Override

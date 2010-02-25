@@ -24,6 +24,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 
 import com.github.marook.eclipse_remote_control.command.command.Command;
+import com.github.marook.eclipse_remote_control.command.command.ExternalToolsCommand;
 import com.github.marook.eclipse_remote_control.command.command.OpenFileCommand;
 import com.github.marook.eclipse_remote_control.command.serialize.ICommandEncoder;
 import com.github.marook.eclipse_remote_control.command.serialize.impl.serialize.SerializeCommandEncoder;
@@ -33,6 +34,7 @@ public class Client {
 	private static void printUsage(final PrintStream out){
 		out.println("Possible commands are:");
 		out.println("  open_file [file]");
+		out.println("  execute_command [command memento]");
 	}
 	
 	private static void fireCommand(final Command cmd){
@@ -75,6 +77,20 @@ public class Client {
 			
 			final OpenFileCommand cmd = new OpenFileCommand();
 			cmd.setFileName(args[1]);
+			
+			fireCommand(cmd);
+		}
+		else if("execute_command".equals(command)){
+			if(args.length < 2){
+				printUsage(System.err);
+				
+				System.exit(1);
+				
+				return;
+			}
+			
+			final ExternalToolsCommand cmd = new ExternalToolsCommand();
+			cmd.setConfigurationMemento(args[1]);
 			
 			fireCommand(cmd);
 		}
