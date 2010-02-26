@@ -6,6 +6,7 @@ erc - eclipse remote control
 4) Usage
 5) Commands
 5.1) Open File
+5.2) Execute Command
 
 ---------------------------------------------------------------------
 Introduction
@@ -24,7 +25,7 @@ The eclipse update site is available here:
 http://github.com/marook/eclipse-remote-control/raw/master/workspaces/erc/update_site/site.xml
 
 The eclipse remote control client can be downloaded here:
-http://github.com/marook/eclipse-remote-control/raw/master/workspaces/erc/release/eclipse_remote_control_client.jar
+http://github.com/marook/eclipse-remote-control/raw/master/workspaces/erc/release/eclipse_remote_control_client_1.1.0.jar
 
 ---------------------------------------------------------------------
 Build
@@ -67,3 +68,20 @@ $ java -jar eclipse_remote_control.jar open_file [absolute path to file]
 
 Example:
 $ java -jar eclipse_remote_control.jar open_file /tmp/file.txt
+
+---------------------------------------------------------------------
+Commands - Execute Command
+
+This command is used to execute run configurations or external tool
+configurations. This includes ant builds for example.
+
+You have to specify the name of the executed run configuration. To find out
+the run configuration name open Run -> Run Configurations... in eclipse. Select
+the run configuration in tree on the left. Then the name is displayed in the
+first row on the right hand side.
+
+Syntax:
+$ java -jar eclipse_remote_control.jar execute_command [run configuration name]
+
+Example:
+$ java -jar eclipse_remote_control.jar execute_command my_ant_config
