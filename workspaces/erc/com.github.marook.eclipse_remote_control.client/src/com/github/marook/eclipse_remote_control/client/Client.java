@@ -90,7 +90,7 @@ public class Client {
 			}
 			
 			final ExternalToolsCommand cmd = new ExternalToolsCommand();
-			cmd.setConfigurationMemento(args[1]);
+			cmd.setConfigurationName(args[1]);
 			
 			fireCommand(cmd);
 		}
