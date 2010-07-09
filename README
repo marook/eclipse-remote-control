@@ -21,6 +21,9 @@ Distribution / Eclipse Update Site
 This project is licenses under the GPL license. See the file COPYING
 for details.
 
+The following builds have been tested with eclipse galileo which is based on
+eclipse platform 3.5.
+
 The eclipse update site is available here:
 http://github.com/marook/eclipse-remote-control/raw/master/workspaces/erc/update_site/site.xml
 
