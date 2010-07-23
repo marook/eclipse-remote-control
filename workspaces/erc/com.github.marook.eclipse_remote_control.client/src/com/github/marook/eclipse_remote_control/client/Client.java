@@ -33,7 +33,7 @@ public class Client {
 
 	private static void printUsage(final PrintStream out){
 		out.println("Possible commands are:");
-		out.println("  open_file [file]");
+		out.println("  open_file [file] [[line number]]");
 		out.println("  execute_command [command memento]");
 	}
 	
@@ -67,7 +67,7 @@ public class Client {
 		
 		final String command = args[0];
 		if("open_file".equals(command)){
-			if(args.length < 2){
+			if(args.length < 2 || args.length > 3){
 				printUsage(System.err);
 				
 				System.exit(1);
@@ -77,6 +77,8 @@ public class Client {
 			
 			final OpenFileCommand cmd = new OpenFileCommand();
 			cmd.setFileName(args[1]);
+			final int lineNumber = args.length != 3 ? 1 : parseLineNumber(args[2]);
+			cmd.setLineNumber(lineNumber);
 			
 			fireCommand(cmd);
 		}
@@ -102,6 +104,16 @@ public class Client {
 			System.exit(1);
 			
 			return;
+		}
+	}
+
+	private static int parseLineNumber(String string) {
+		try {
+			return Integer.parseInt(string);
+		} catch (NumberFormatException e) {
+			printUsage(System.err);
+			System.exit(1);
+			return 0;
 		}
 	}
 	
