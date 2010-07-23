@@ -1,12 +1,13 @@
 erc - eclipse remote control
 
 1) Introduction
-2) Distribution / Eclipse Update Site
-3) Build
-4) Usage
-5) Commands
-5.1) Open File
-5.2) Execute Command
+2) Security Warning
+3) Distribution / Eclipse Update Site
+4) Build
+5) Usage
+6) Commands
+6.1) Open File
+6.2) Execute Command
 
 ---------------------------------------------------------------------
 Introduction
@@ -14,6 +15,14 @@ Introduction
 Eclipse plug-in project which adds remote control features to eclipse.
 Commands can be sent via the eclipse remote control client to a
 running eclipse instance.
+
+---------------------------------------------------------------------
+Security Warning
+
+Eclipse remote control doesen't implement authentication. So you should make
+sure that the eclipse remote control port can not be reached by people you
+don't trust. I recommend using eclipse remote control only locally on your
+PC and not over an open network.
 
 ---------------------------------------------------------------------
 Distribution / Eclipse Update Site
