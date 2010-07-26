@@ -25,6 +25,8 @@ package com.github.marook.eclipse_remote_control.run.runner.impl.simple.atom;
 import java.io.File;
 import java.util.HashMap;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -69,30 +71,31 @@ public class OpenFileCommandRunner extends AbstractAtomCommandRunner {
 	protected void internalExecute(final Command cmd) throws Exception {
 		final OpenFileCommand c = (OpenFileCommand) cmd;
 		
+		final IFile file = javaFileToPluginFile(c.getFileName());
+		if (file != null){
+			// it seems that file is in the workspace
+			
+			final IWorkbench workbench = PlatformUI.getWorkbench();
+		    workbench.getDisplay().syncExec(new Runnable() {
+				@Override
+				public void run() {
+					final IWorkbenchWindow activeWorkbenchWindow =
+						workbench.getActiveWorkbenchWindow();
+					final IWorkbenchPage page =
+				    	activeWorkbenchWindow.getActivePage();
+				 
+				    openInEditor(page, file, c.getLineNumber());
+				}
+			});
+		    
+		    return;
+		}
+		
+		// here comes the alternative approach: open file through EFS local fs 
 		final File f = new File(c.getFileName());
-		
-		if (!f.exists()){
-			// TODO abort / show message?
-			
-			return;
-		}
-		
-		if (!f.isFile()){
-			// TODO abort / show message?
-			
-			return;
-		}
-		
-		final IFile file = javaFileToPluginFile(f);
-	    
-		if (file == null){
-			// TODO abort / show message? project not opened??
-			
-			return;
-		}
-		
-		
-		final IWorkbench workbench = PlatformUI.getWorkbench();
+		final IFileStore fileStore =
+			EFS.getLocalFileSystem().getStore(f.toURI());
+	    final IWorkbench workbench = PlatformUI.getWorkbench();
 	    workbench.getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -100,27 +103,31 @@ public class OpenFileCommandRunner extends AbstractAtomCommandRunner {
 					workbench.getActiveWorkbenchWindow();
 				final IWorkbenchPage page =
 			    	activeWorkbenchWindow.getActivePage();
-			 
-			    openInEditor(page, file, c.getLineNumber());
+
+			    try {
+					IDE.openEditorOnFileStore(page, fileStore);
+				}
+			    catch(final PartInitException e) {
+					// TODO handle error
+					e.printStackTrace();
+				}
 			}
 		});
 	}
 
-	private IFile javaFileToPluginFile(File javaFile) {
+	private IFile javaFileToPluginFile(String javaFile) {
 		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
 			if (!project.isOpen()) continue; // TODO opening of project ??
 			
-			String filePath = javaFile.getPath();
-		
-			if (filePath.startsWith('/' + project.getName())) {
-				filePath = filePath.substring(project.getName().length() + 1);
-			} else if (filePath.startsWith("/")) { // absolute system path
+			if (javaFile.startsWith('/' + project.getName())) {
+				javaFile = javaFile.substring(project.getName().length() + 1);
+			} else if (javaFile.startsWith("/")) { // absolute system path
 				final String projectPath = project.getLocation().toOSString();
-				if (filePath.length() < projectPath.length()) continue;
-				filePath = filePath.substring(projectPath.length());
+				if (javaFile.length() < projectPath.length()) continue;
+				javaFile = javaFile.substring(projectPath.length());
 			}
 			
-			IFile file = project.getFile(filePath);
+			IFile file = project.getFile(javaFile);
 			if (file.exists()) {
 				return file;
 			}

@@ -75,11 +75,18 @@ Commands - Open File
 
 This command opens a file in the running eclipse instance.
 
+The file is first looked up in the eclipse workspace. If the file can't be
+found in the eclipse workspace then the file is opened from the operating
+system's file system.
+
+An optional line number can be specified for files which are opened from the
+eclipse workspace. After opening the file the specified line will be selected.
+
 Syntax:
-$ java -jar eclipse_remote_control.jar open_file [absolute path to file]
+$ java -jar eclipse_remote_control.jar open_file [absolute path to file] <line number>
 
 Example:
-$ java -jar eclipse_remote_control.jar open_file /tmp/file.txt
+$ java -jar eclipse_remote_control.jar open_file /tmp/file.txt 2
 
 ---------------------------------------------------------------------
 Commands - Execute Command
