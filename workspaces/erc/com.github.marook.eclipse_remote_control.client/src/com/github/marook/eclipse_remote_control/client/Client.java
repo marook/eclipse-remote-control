@@ -19,9 +19,11 @@
 
 package com.github.marook.eclipse_remote_control.client;
 
+import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.Arrays;
 
 import com.github.marook.eclipse_remote_control.command.command.Command;
 import com.github.marook.eclipse_remote_control.command.command.ExternalToolsCommand;
@@ -37,23 +39,20 @@ public class Client {
 		out.println("  execute_command [command memento]");
 	}
 	
-	private static void fireCommand(final Command cmd){
-		try{
-			final Socket s = new Socket("localhost", 53343);
+	public static void fireCommand(final Command cmd) throws IOException{
+		final Socket s = new Socket("localhost", 53343);
 			
-			final ICommandEncoder ce = new SerializeCommandEncoder();
-			final ObjectOutput cmdEncoder = ce.createEncoder(s.getOutputStream());
-			cmdEncoder.writeObject(cmd);
+		final ICommandEncoder ce = new SerializeCommandEncoder();
+		final ObjectOutput cmdEncoder = ce.createEncoder(s.getOutputStream());
+		cmdEncoder.writeObject(cmd);
 			
-			cmdEncoder.flush();
+		cmdEncoder.flush();
 			
-			cmdEncoder.close();
-		}
-		catch(final Exception e){
-			e.printStackTrace(System.err);
-			
-			System.exit(1);
-		}
+		cmdEncoder.close();
+	}
+	
+	private static void handleCommandRunError(final String[] args, final Exception e){
+		throw new RuntimeException("Can't run command " + Arrays.toString(args), e);
 	}
 	
 	public static void main(final String[] args) {
@@ -75,12 +74,15 @@ public class Client {
 				return;
 			}
 			
-			final OpenFileCommand cmd = new OpenFileCommand();
-			cmd.setFileName(args[1]);
 			final int lineNumber = args.length != 3 ? 1 : parseLineNumber(args[2]);
-			cmd.setLineNumber(lineNumber);
+			final String fileName = args[1];
 			
-			fireCommand(cmd);
+			try{
+				openFile(fileName, lineNumber);
+			}
+			catch(final IOException e){
+				handleCommandRunError(args, e);
+			}
 		}
 		else if("execute_command".equals(command)){
 			if(args.length < 2){
@@ -91,10 +93,13 @@ public class Client {
 				return;
 			}
 			
-			final ExternalToolsCommand cmd = new ExternalToolsCommand();
-			cmd.setConfigurationName(args[1]);
-			
-			fireCommand(cmd);
+			final String configurationName = args[1];
+			try{
+				runExternalTool(configurationName);
+			}
+			catch(final IOException e){
+				handleCommandRunError(args, e);
+			}
 		}
 		else{
 			System.err.println("Unknown command: " + command);
@@ -105,6 +110,21 @@ public class Client {
 			
 			return;
 		}
+	}
+
+	public static void runExternalTool(final String configurationName) throws IOException {
+		final ExternalToolsCommand cmd = new ExternalToolsCommand();
+		cmd.setConfigurationName(configurationName);
+		
+		fireCommand(cmd);
+	}
+
+	public static void openFile(final String fileName, final int lineNumber) throws IOException {
+		final OpenFileCommand cmd = new OpenFileCommand();
+		cmd.setFileName(fileName);
+		cmd.setLineNumber(lineNumber);
+		
+		fireCommand(cmd);
 	}
 
 	private static int parseLineNumber(String string) {
