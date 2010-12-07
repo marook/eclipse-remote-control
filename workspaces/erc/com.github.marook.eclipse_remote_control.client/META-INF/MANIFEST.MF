@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eclipse_remote_control_client
 Bundle-SymbolicName: com.github.marook.eclipse_remote_control.client
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Markus Pielmeier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: com.github.marook.eclipse_remote_control.command;bundle-version="1.1.0"
+Require-Bundle: com.github.marook.eclipse_remote_control.command;bundle-version="1.2.0"

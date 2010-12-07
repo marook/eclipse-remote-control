@@ -2,7 +2,7 @@
 <feature
       id="com.github.marook.eclipse_remote_control"
       label="eclipse_remote_control"
-      version="1.1.0.qualifier"
+      version="1.2.0.qualifier"
       provider-name="Markus Pielmeier">
 
    <description>
@@ -695,8 +695,8 @@ Public License instead of this License.  But first, please read
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="com.github.marook.eclipse_remote_control.command" version="1.1.0" match="greaterOrEqual"/>
-      <import plugin="com.github.marook.eclipse_remote_control.run" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="com.github.marook.eclipse_remote_control.command" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="com.github.marook.eclipse_remote_control.run" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.filesystem" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.runtime" version="3.5.0" match="greaterOrEqual"/>

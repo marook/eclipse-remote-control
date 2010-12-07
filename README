@@ -30,14 +30,14 @@ Distribution / Eclipse Update Site
 This project is licenses under the GPL license. See the file COPYING
 for details.
 
-The following builds have been tested with eclipse galileo which is based on
-eclipse platform 3.5.
+The following builds have been tested with eclipse helios which is based on
+eclipse platform 3.6.
 
 The eclipse update site is available here:
 http://github.com/marook/eclipse-remote-control/raw/master/workspaces/erc/update_site/site.xml
 
 The eclipse remote control client can be downloaded here:
-http://github.com/downloads/marook/eclipse-remote-control/eclipse_remote_control_client_1.1.0.jar
+http://github.com/downloads/marook/eclipse-remote-control/eclipse_remote_control_client_1.2.0.jar
 
 ---------------------------------------------------------------------
 Build
