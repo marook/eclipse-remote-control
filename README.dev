@@ -12,7 +12,12 @@ http://pielmeier.blogspot.com/2010/07/implementing-new-eclipse-remote-control.ht
 ---------------------------------------------------------------------
 Building a new release
 
+Build eclipse plugin:
 1) Increase version numbers in com.github.*/META-INF/MANIFEST.MF
 2) Increase version number in feature/feature.xml
 3) Add feature with new version to update_site/site.xml
 4) Select new feature in update_site/site.xml and click 'Build'
+
+Build client:
+1) Run target package in com.github.marook.eclipse_remote_control.client/build.xml
+2) Copy com.github.marook.eclipse_remote_control.client/eclipse_remote_control_client.jar to release/
