@@ -25,6 +25,10 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Arrays;
 
+import com.github.marook.eclipse_remote_control.client.parser.CommandParseException;
+import com.github.marook.eclipse_remote_control.client.parser.CommandParser;
+import com.github.marook.eclipse_remote_control.client.parser.ExecuteCommandParser;
+import com.github.marook.eclipse_remote_control.client.parser.OpenFileCommandParser;
 import com.github.marook.eclipse_remote_control.command.command.Command;
 import com.github.marook.eclipse_remote_control.command.command.ExternalToolsCommand;
 import com.github.marook.eclipse_remote_control.command.command.OpenFileCommand;
@@ -32,13 +36,30 @@ import com.github.marook.eclipse_remote_control.command.serialize.ICommandEncode
 import com.github.marook.eclipse_remote_control.command.serialize.impl.serialize.SerializeCommandEncoder;
 
 public class Client {
+	
+	private CommandParser[] PARSERS = new CommandParser[]{
+		new OpenFileCommandParser(),
+		new ExecuteCommandParser()
+	};
 
-	private static void printUsage(final PrintStream out){
+	private void printUsage(final PrintStream out){
 		out.println("Possible commands are:");
-		out.println("  open_file [file] [[line number]]");
-		out.println("  execute_command [command memento]");
+		
+		for(final CommandParser parser : PARSERS){
+			out.print("  ");
+			out.print(parser.getName());
+			out.print(" ");
+			out.println(parser.getUsage());
+		}
 	}
 	
+	public void fireCmd(final Command cmd) throws IOException{
+		fireCommand(cmd);
+	}
+
+	/**
+	 * @deprecated Instantiate Client and run fireCmd instead.
+	 */
 	public static void fireCommand(final Command cmd) throws IOException{
 		final Socket s = new Socket("localhost", 53343);
 			
@@ -55,7 +76,7 @@ public class Client {
 		throw new RuntimeException("Can't run command " + Arrays.toString(args), e);
 	}
 	
-	public static void main(final String[] args) {
+	private void run(final String[] args){
 		if(args.length < 1){
 			printUsage(System.err);
 			
@@ -65,8 +86,19 @@ public class Client {
 		}
 		
 		final String command = args[0];
-		if("open_file".equals(command)){
-			if(args.length < 2 || args.length > 3){
+		
+		for(final CommandParser parser : PARSERS){
+			if(!parser.getName().equals(command)){
+				continue;
+			}
+			
+			
+			final Command cmd;
+			try{ 
+				cmd = parser.parseCommand(args);
+			}
+			catch(final CommandParseException e){
+				System.err.println(e.getMessage());
 				printUsage(System.err);
 				
 				System.exit(1);
@@ -74,44 +106,29 @@ public class Client {
 				return;
 			}
 			
-			final int lineNumber = args.length != 3 ? 1 : parseLineNumber(args[2]);
-			final String fileName = args[1];
-			
 			try{
-				openFile(fileName, lineNumber);
+				fireCmd(cmd);
 			}
-			catch(final IOException e){
+			catch(final Exception e){
 				handleCommandRunError(args, e);
 			}
-		}
-		else if("execute_command".equals(command)){
-			if(args.length < 2){
-				printUsage(System.err);
-				
-				System.exit(1);
-				
-				return;
-			}
-			
-			final String configurationName = args[1];
-			try{
-				runExternalTool(configurationName);
-			}
-			catch(final IOException e){
-				handleCommandRunError(args, e);
-			}
-		}
-		else{
-			System.err.println("Unknown command: " + command);
-			
-			printUsage(System.err);
-			
-			System.exit(1);
 			
 			return;
 		}
+		
+		// not command could be identified
+		System.err.println("Unknown command: " + command);
+		printUsage(System.err);
+		System.exit(1);
+	}
+	
+	public static void main(final String[] args) {
+		new Client().run(args);
 	}
 
+	/**
+	 * @deprecated Instantiate ExternalToolsCommand and run fireCmd instead.
+	 */
 	public static void runExternalTool(final String configurationName) throws IOException {
 		final ExternalToolsCommand cmd = new ExternalToolsCommand();
 		cmd.setConfigurationName(configurationName);
@@ -119,6 +136,9 @@ public class Client {
 		fireCommand(cmd);
 	}
 
+	/**
+	 * @deprecated Instantiate OpenFileCommand and run fireCmd instead.
+	 */
 	public static void openFile(final String fileName, final int lineNumber) throws IOException {
 		final OpenFileCommand cmd = new OpenFileCommand();
 		cmd.setFileName(fileName);
@@ -127,14 +147,4 @@ public class Client {
 		fireCommand(cmd);
 	}
 
-	private static int parseLineNumber(String string) {
-		try {
-			return Integer.parseInt(string);
-		} catch (NumberFormatException e) {
-			printUsage(System.err);
-			System.exit(1);
-			return 0;
-		}
-	}
-	
 }
