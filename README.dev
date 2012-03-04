@@ -1,9 +1,18 @@
 erc - eclipse remote control
 
 1) Howtos
+2) Building a new release
 
 ---------------------------------------------------------------------
 Howtos
 
 * How to implement new commands
 http://pielmeier.blogspot.com/2010/07/implementing-new-eclipse-remote-control.html
+
+---------------------------------------------------------------------
+Building a new release
+
+1) Increase version numbers in com.github.*/META-INF/MANIFEST.MF
+2) Increase version number in feature/feature.xml
+3) Add feature with new version to update_site/site.xml
+4) Select new feature in update_site/site.xml and click 'Build'
