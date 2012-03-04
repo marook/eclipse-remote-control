@@ -26,7 +26,7 @@ public class OpenFileCommandParser extends CommandParser {
 			throw new CommandParseException("Expecting 1 or 2 arguments");
 		}
 
-		final int lineNumber = args.length != 3 ? 1 : parseLineNumber(args[2]);
+		final int lineNumber = args.length < 3 ? 1 : parseLineNumber(args[2]);
 		final String fileName = args[1];
 
 		final OpenFileCommand cmd = new OpenFileCommand();
