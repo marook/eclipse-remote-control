@@ -21,11 +21,13 @@ package com.github.marook.eclipse_remote_control.command.command;
 
 public class ExternalToolsCommand extends Command {
 	
-	private static final long serialVersionUID = -4136997204488521506L;
+	private static final long serialVersionUID = -2445519253513913731L;
 
 	public static final String ID = ExternalToolsCommand.class.getName();
 	
 	private String configurationName;
+	
+	private ExternalToolsCommandRunMode runMode = ExternalToolsCommandRunMode.RUN;
 	
 	public ExternalToolsCommand() {
 		super(ID);
@@ -37,6 +39,14 @@ public class ExternalToolsCommand extends Command {
 	
 	public void setConfigurationName(String configurationName) {
 		this.configurationName = configurationName;
+	}
+	
+	public ExternalToolsCommandRunMode getRunMode() {
+		return runMode;
+	}
+	
+	public void setRunMode(ExternalToolsCommandRunMode runMode) {
+		this.runMode = runMode;
 	}
 
 }
