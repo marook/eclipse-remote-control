@@ -99,8 +99,14 @@ the run configuration name open Run -> Run Configurations... in eclipse. Select
 the run configuration in tree on the left. Then the name is displayed in the
 first row on the right hand side.
 
+As an optional argument you can pass the run mode in which the run configuration
+is launched. The following alternatives are possible:
+* RUN
+* DEBUG
+* PROFILE
+
 Syntax:
-$ java -jar eclipse_remote_control.jar execute_command [run configuration name]
+$ java -jar eclipse_remote_control.jar execute_command [run configuration name] <run mode>
 
 Example:
-$ java -jar eclipse_remote_control.jar execute_command my_ant_config
+$ java -jar eclipse_remote_control.jar execute_command my_ant_config DEBUG
