@@ -31,7 +31,7 @@ public class ExternalToolsCommandRunner extends AbstractAtomCommandRunner {
 	public ExternalToolsCommandRunner() {
 		super(ExternalToolsCommand.ID);
 	}
-
+	
 	@Override
 	protected void internalExecute(final Command cmd) throws Exception {
 		final ExternalToolsCommand c = (ExternalToolsCommand) cmd;
@@ -45,7 +45,7 @@ public class ExternalToolsCommandRunner extends AbstractAtomCommandRunner {
 			
 			if(!requestedCfgName.equals(cfgName)) continue;
 
-			cfg.launch(ILaunchManager.RUN_MODE, null);
+			cfg.launch(new RunModeMapper().getRunMode(c.getRunMode()), null);
 			
 			break;
 		}
