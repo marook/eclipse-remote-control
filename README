@@ -79,14 +79,21 @@ The file is first looked up in the eclipse workspace. If the file can't be
 found in the eclipse workspace then the file is opened from the operating
 system's file system.
 
+So the example path /myproject/file.txt will open the file 'file.txt' below
+the eclipse project myproject. If there is no such file in the myproject
+project then the path will be looked up below the file system root.
+
 An optional line number can be specified for files which are opened from the
 eclipse workspace. After opening the file the specified line will be selected.
+If you try to open a absolute file system path the line number will be ignored.
 
 Syntax:
-$ java -jar eclipse_remote_control.jar open_file [absolute path to file] <line number>
+$ java -jar eclipse_remote_control.jar open_file [workspace file path] <line number>
+$ java -jar eclipse_remote_control.jar open_file [absolute path to file]
 
 Example:
 $ java -jar eclipse_remote_control.jar open_file /tmp/file.txt 2
+$ java -jar eclipse_remote_control.jar open_file C:\tmp\file.txt
 
 ---------------------------------------------------------------------
 Commands - Execute Command
